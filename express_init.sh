@@ -7,6 +7,7 @@ touch src/models.ts
 touch src/tests.ts
 touch src/urls.ts
 touch src/views.ts
+touch src/services.ts
 yarn add ts-node-dev typescript -D
 yarn add express
 yarn add @types/node @types/express -D
