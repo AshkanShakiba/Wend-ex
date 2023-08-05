@@ -1,10 +1,8 @@
 abstract class Model {
     protected id: number;
-    private static counter: number = 0;
 
-    public constructor() {
-        this.id = Model.counter;
-        Model.counter++;
+    public constructor(_id: number) {
+        this.id = _id;
     }
 
     public getId() {
@@ -16,8 +14,8 @@ export class Product extends Model {
     private name: string;
     private price: number;
 
-    public constructor(_name: string, _price: number) {
-        super();
+    public constructor(_id: number, _name: string, _price: number) {
+        super(_id);
         this.name = _name;
         this.price = _price;
     }
@@ -39,8 +37,8 @@ export class Order extends Model {
     private date: Date;
     private product: Product;
 
-    public constructor(_product: Product) {
-        super();
+    public constructor(_id: number, _product: Product) {
+        super(_id);
         this.date = new Date();
         this.product = _product;
     }

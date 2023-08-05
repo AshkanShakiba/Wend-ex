@@ -4,7 +4,7 @@ const products: Product[] = [];
 const orders: Order[] = [];
 
 export function createProduct(name: string, price: number) {
-    let product: Product = new Product(name, price);
+    let product: Product = new Product(products.length, name, price);
     addProduct(product);
 }
 
@@ -27,7 +27,7 @@ export function getProducts() {
 }
 
 export function createOrder(product: Product) {
-    let order: Order = new Order(product);
+    let order: Order = new Order(orders.length, product);
     addOrder(order);
 }
 
