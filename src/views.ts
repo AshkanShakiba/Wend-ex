@@ -17,9 +17,9 @@ export function productDetail(req: Request, res: Response, next: NextFunction) {
     let productId: number = Number(req.params.productId);
     let product: Product | null = getProduct(productId);
     if (product == null) {
-        return res.sendStatus(404).json({ error: "product not found" });
+        return res.status(404).json({ error: "product not found" });
     } else {
-        return res.sendStatus(200).json(product.getObject());
+        return res.status(200).json(product.getObject());
     }
 }
 
@@ -27,10 +27,10 @@ export function order(req: Request, res: Response, next: NextFunction) {
     let productId: number = Number(req.params.productId);
     let product: Product | null = getProduct(productId);
     if (product == null) {
-        return res.sendStatus(404).json({ error: "product not found" });
+        return res.status(404).json({ error: "product not found" });
     } else {
         createOrder(product);
-        return res.sendStatus(200).json({ message: "your order was placed" });
+        return res.status(200).json({ message: "your order was placed" });
     }
 }
 
@@ -48,9 +48,9 @@ export function orderDetail(req: Request, res: Response, next: NextFunction) {
     let orderId: number = Number(req.params.orderId);
     let order: Order | null = getOrder(orderId);
     if (order == null) {
-        return res.sendStatus(404).json({ error: "order not found" });
+        return res.status(404).json({ error: "order not found" });
     } else {
-        return res.sendStatus(200).json(order.getObject());
+        return res.status(200).json(order.getObject());
     }
 }
 
