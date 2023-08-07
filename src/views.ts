@@ -1,56 +1,57 @@
 import { Request, Response, NextFunction } from "express";
 
-import { Product, Order } from "./models";
-import { getProduct, getProducts, createOrder, getOrder, getOrders } from "./services";
+import { ProductModel } from "./db/models/product";
+import {Order, OrderModel} from "./db/models/order";
+import { getProduct, getProducts, createOrder, getOrder, getOrders } from "./db/services";
 
-export function productsList(req: Request, res: Response, next: NextFunction) {
-    let output = [];
-    let products: Product[] = getProducts();
+export async function productsList(req: Request, res: Response, next: NextFunction) {
+    let output: ProductModel[] = [];
+    let products = await getProducts();
     for (let i = 0; i < products.length; i++) {
-        let product: Product = products[i];
-        output.push(product.getObject());
+        let product = products[i];
+        output.push(product);
     }
     return res.json(output);
 }
 
-export function productDetail(req: Request, res: Response, next: NextFunction) {
+export async function productDetail(req: Request, res: Response, next: NextFunction) {
     let productId: number = Number(req.params.productId);
-    let product: Product | null = getProduct(productId);
+    let product = await getProduct(productId.toString());
     if (product == null) {
         return res.status(404).json({ error: "product not found" });
     } else {
-        return res.status(200).json(product.getObject());
+        return res.status(200).json(product);
     }
 }
 
-export function order(req: Request, res: Response, next: NextFunction) {
+export async function order(req: Request, res: Response, next: NextFunction) {
     let productId: number = Number(req.params.productId);
-    let product: Product | null = getProduct(productId);
+    let product = await getProduct(productId.toString());
     if (product == null) {
         return res.status(404).json({ error: "product not found" });
     } else {
-        createOrder(product);
+        await createOrder(productId.toString());
         return res.status(200).json({ message: "your order was placed" });
     }
 }
 
-export function ordersList(req: Request, res: Response, next: NextFunction) {
-    let output = [];
-    let orders: Order[] = getOrders();
+export async function ordersList(req: Request, res: Response, next: NextFunction) {
+    let output: OrderModel[] = [];
+    let orders = await getOrders();
     for (let i = 0; i < orders.length; i++) {
-        let order: Order = orders[i];
-        output.push(order.getObject());
+        let order = orders[i];
+        output.push(order);
     }
     return res.json(output);
 }
 
-export function orderDetail(req: Request, res: Response, next: NextFunction) {
+export async function orderDetail(req: Request, res: Response, next: NextFunction) {
     let orderId: number = Number(req.params.orderId);
-    let order: Order | null = getOrder(orderId);
+    let order = await getOrder(orderId.toString());
     if (order == null) {
         return res.status(404).json({ error: "order not found" });
     } else {
-        return res.status(200).json(order.getObject());
+        return res.status(200).json(order);
     }
 }
 
